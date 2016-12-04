@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="scrumboard.demo">
+    <div ng-controller="ScrumboardController">
+        {{person.name}} is {{person.age}}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+    <script>
+        (function(){
+            'use strict';
+            angular.module('scrumboard.demo',[])
+                .controller('ScrumboardController', ['$scope', '$http', ScrumboardController]);
+            function ScrumboardController($scope, $http){
+                $scope.add = function (list, title) {
+                    var card = {title: title};
+                    list.cards.push(card);
+                };
+                $scope.data=[];
+                $http.get('/sb/lists').then(function (response) {
+                   $scope.data = response.data;
+                });
+
+            }
+            
+        }());
+    </script>
+</body>
+</html>
